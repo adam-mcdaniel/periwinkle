@@ -7,7 +7,6 @@ I know I do :)
 
 
 ## Features
----
 
 - Statically Compiled
 - Dynamically Typed
