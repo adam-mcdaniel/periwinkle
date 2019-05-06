@@ -1,0 +1,41 @@
+
+
+
+class Point {
+    new = (x, y) {
+        self.x = x
+        self.y = y
+        return self
+    }
+
+    move = (x, y) {
+        self.x += x
+        self.y += y
+    }
+
+    goto = (x, y) {
+        self.x = x
+        self.y = y
+    }
+}
+
+
+class Sprite : Point {
+    new = (x, y, image) {
+        self.goto(x, y)
+        self.set_image(image)
+        return self
+    }
+
+    set_image = (image) {
+        self.image = image
+    }
+
+    get_image = () {
+        return self.image
+    }
+
+    __str__ = () {
+        return "<" + str(self.get_image()) + " at x: " + str(self.x) + ", y: " + str(self.y) + ">"
+    }
+}

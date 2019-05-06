@@ -1,0 +1,11 @@
+
+let range = (l, u) {
+    let n = l
+    let result = []
+    while n < u {
+        result += [n]
+        n += 1
+    }
+
+    return result
+}

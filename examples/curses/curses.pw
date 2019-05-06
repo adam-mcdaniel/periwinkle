@@ -1,0 +1,35 @@
+include "curses.cpp"
+
+
+let init = curses_init&
+let write_str = curses_write_str&
+let draw = curses_refresh&
+let clear = curses_clear&
+let get_char = curses_get_char&
+let exit = curses_exit&
+
+
+class Screen {
+    new = () {
+        init()
+        return self
+    }
+
+    // Updates the screen and returns the new user input
+    update = () {
+        let input = get_char()
+        draw()
+        clear()
+        return input
+    }
+
+    // Writes a string at x y on the terminal
+    write = (x, y, s) {
+        write_str(x, y, str(s))
+    }
+
+    // Destroys the curses window
+    exit = () {
+        exit()
+    }
+}

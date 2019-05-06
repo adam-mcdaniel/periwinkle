@@ -1,0 +1,53 @@
+import "list.pw"
+import "curses.pw"
+import "sprites.pw"
+
+
+
+let write_sign = (scr, x, y) {
+    scr.write(x, y,   "+--------------+")
+    scr.write(x, y+1, "| hello world! |")
+    scr.write(x, y+2, "+--------------+")
+}
+
+
+
+
+let screen = Screen().new()
+
+
+let x = 0
+let y = 0
+let key = ""
+let done = false
+
+while not done {
+    screen.write(x, y, "@")
+
+
+    write_sign(screen, 40, 10)
+
+
+    key = screen.update()
+
+    if key == "a" {
+        x -= 1
+    }
+
+    if key == "s" {
+        y += 1
+    }
+
+    if key == "d" {
+        x += 1
+    }
+
+    if key == "w" {
+        y -= 1
+    }
+
+    if key == "q" {
+        done = true
+        screen.exit()
+    }
+}

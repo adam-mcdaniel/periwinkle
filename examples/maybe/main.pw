@@ -1,0 +1,31 @@
+
+class Maybe {
+    Just = (value) {
+        self.value = value
+        self.is_some = true
+
+        return self
+    }
+
+    Nothing = () {
+        self.value = @
+        self.is_some = false
+
+        return self
+    }
+
+    __bool__ = () {
+        return self.is_some
+    }
+
+    __str__ = () {
+        if boolean(self) {
+            return "Just " + str(self.value)
+        }
+
+        if not boolean(self) {
+            return "Nothing"
+        }
+    }
+}
+
