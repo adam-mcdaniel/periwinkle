@@ -50,11 +50,16 @@ class Maybe {
 }
 
 
+// Demonstration of lambda
+let Just = (x) => Maybe().Just(x)
+
+let Nothing = Maybe().Nothing()
+
 // Using the Maybe type
-let five = Maybe().Just(5)
+let five = Just(5)
 putln(five)
 
-let none = Maybe().Nothing()
+let none = Nothing
 putln(none)
 ```
 

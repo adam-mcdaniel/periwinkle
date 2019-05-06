@@ -1,50 +1,29 @@
-import "list.pw"
 import "curses.pw"
+import "screen.pw"
 import "sprites.pw"
-
-
-
-let write_sign = (scr, x, y) {
-    scr.write(x, y,   "+--------------+")
-    scr.write(x, y+1, "| hello world! |")
-    scr.write(x, y+2, "+--------------+")
-}
-
-
+import "player.pw"
 
 
 let screen = Screen().new()
 
-
-let x = 0
-let y = 0
 let key = ""
 let done = false
 
+
+for x in range(0, 10) {
+    for y in range(0, 10) {
+        screen.append(Sprite().new(25+x, 5+y, "w"))
+    }
+}
+
+
+
+screen.append(Player().new(1, 1, "@"))
+
+
+
 while not done {
-    screen.write(x, y, "@")
-
-
-    write_sign(screen, 40, 10)
-
-
     key = screen.update()
-
-    if key == "a" {
-        x -= 1
-    }
-
-    if key == "s" {
-        y += 1
-    }
-
-    if key == "d" {
-        x += 1
-    }
-
-    if key == "w" {
-        y -= 1
-    }
 
     if key == "q" {
         done = true

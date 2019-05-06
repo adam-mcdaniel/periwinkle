@@ -1,11 +1,11 @@
 #include <ncurses.h>
-#include <string>
 #include "../cable/cable.cpp"
 
 
 const Fn curses_init = Fn([](Value _) {
     initscr();
     cbreak();
+    halfdelay(1);
     noecho();
     clear();
     curs_set(0);
@@ -38,6 +38,7 @@ const Fn curses_get_char = Fn([](Value args) {
     char ch = getch();
     string s;
     s += ch;
+    napms(3);
     return Value(s);
 });
 

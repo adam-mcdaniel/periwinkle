@@ -1,0 +1,48 @@
+class Test {
+    new = () {
+        self.n = 0
+        return self
+    }
+
+    update = (t) {
+        self.n += 1
+        putln("my n is ", self.n)
+    }
+
+    a = () {}
+    b = () {}
+    c = () {}
+    d = () {}
+    e = () {}
+    f = () {}
+    g = () {}
+    h = () {}
+    i = () {}
+    j = () {}
+    k = () {}
+    l = () {}
+    m = () {}
+    n = () {}
+    o = () {}
+    p = () {}
+    q = () {}
+    r = () {}
+    s = () {}
+    t = () {}
+    u = () {}
+    v = () {}
+}
+
+
+
+let l = []
+
+for x in range(0, 100) {
+    l += [Test().new()]
+}
+
+
+
+for t in l {
+    t.update(l)
+}

@@ -9,7 +9,7 @@ let get_char = curses_get_char&
 let exit = curses_exit&
 
 
-class Screen {
+class CursesScreen {
     new = () {
         init()
         return self

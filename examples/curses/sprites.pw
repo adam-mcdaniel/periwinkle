@@ -1,6 +1,4 @@
 
-
-
 class Point {
     new = (x, y) {
         self.x = x
@@ -35,7 +33,9 @@ class Sprite : Point {
         return self.image
     }
 
+    update = (sprites, key) {}
+
     __str__ = () {
-        return "<" + str(self.get_image()) + " at x: " + str(self.x) + ", y: " + str(self.y) + ">"
+        return self.get_image()
     }
 }

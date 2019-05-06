@@ -1,5 +1,13 @@
 
 CABLELANG_PRELUDE = r'''
+include "std/list/list.cpp";
+let pop = pop_fn&;
+let push = append_fn&;
+let remove = remove_fn&;
+let len = len_fn&;
+let range = range_fn&;
+
+
 include "std/str/str.cpp";
 let raw_to_string = raw_to_string_fn&;
 let raw_type = raw_type_fn&;

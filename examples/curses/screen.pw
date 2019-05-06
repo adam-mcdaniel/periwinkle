@@ -1,0 +1,42 @@
+class Screen : CursesScreen {
+    new = () {
+        CursesScreen().new()
+        self.sprites = []
+        return self
+    }
+
+    // Append sprite to back of sprites
+    append = (sp) {
+        self.sprites += [sp]
+    }
+
+    // Pop sprite off back of sprites
+    pop = (sp) {
+        let result = pop(self.sprites)
+        self.sprites = result[0]
+
+        return result[1]
+    }
+
+    // Remove sprite at index
+    remove = (index) {
+        self.sprites = remove(self.sprites, index)
+    }
+
+    // Draws a sprite `sp` to the screen
+    draw = (sp) {
+        self.write(sp.x, sp.y, sp)
+    }
+
+    // Draw screen and update sprites
+    update = () {
+        let key = CursesScreen().update()
+
+        for sp in self.sprites {
+            sp.update(self.sprites, key)            
+            self.draw(sp)
+        }
+        
+        return key
+    }
+}

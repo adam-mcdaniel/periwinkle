@@ -1,0 +1,28 @@
+
+
+
+
+class Player : Sprite {
+    update = (sprites, key) {
+        let x = 0
+        let y = 0
+
+        if key == "a" {
+            x -= 1
+        }
+
+        if key == "s" {
+            y += 1
+        }
+
+        if key == "d" {
+            x += 1
+        }
+
+        if key == "w" {
+            y -= 1
+        }
+
+        self.move(x, y)
+    }    
+}
