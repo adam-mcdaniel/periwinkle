@@ -28,7 +28,7 @@ class Maybe {
     }
 
     Nothing = () {
-        self.value = @
+        self.value = @ // @ basically is Python's `None`
         self.is_some = false
 
         return self
@@ -48,6 +48,14 @@ class Maybe {
         }
     }
 }
+
+
+// Using the Maybe type
+let five = Maybe().Just(5)
+putln(five)
+
+let none = Maybe().Nothing()
+putln(none)
 ```
 
 
