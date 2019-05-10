@@ -36,13 +36,25 @@ class Test {
 
 
 let l = []
-
 for x in range(0, 100) {
     l += [Test().new()]
 }
+
+// let l = map(range(0, 100), (_) => Test().new())
+// map(l, (t) => t.update(l))
 
 
 
 for t in l {
     t.update(l)
 }
+
+
+// map(range(0, 100000), putln)
+
+
+let a = 9
+let b = a
+a = 6
+
+putln(b)

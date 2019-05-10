@@ -6,6 +6,7 @@ let push = append_fn&;
 let remove = remove_fn&;
 let len = len_fn&;
 let range = range_fn&;
+let map = map_fn&;
 
 
 include "std/str/str.cpp";

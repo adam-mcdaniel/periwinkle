@@ -1,0 +1,46 @@
+include "sdl2.cpp"
+
+
+let init = sdl_init_fn&
+let close = sdl_close_fn&
+
+
+let clear = sdl_clear_fn&
+let blit = sdl_blit_fn&
+let refresh = sdl_refresh_fn&
+
+let get_input = sdl_get_input_fn&
+
+
+
+
+class Screen {
+    new = (win_name, w, h) {
+        init(win_name, w, h)
+        return self
+    }
+
+    clear = () {
+        clear()
+    }
+
+    blit = (sp) {
+        blit(
+            sp.get_image(),
+            sp.x, sp.y,
+            sp.w, sp.h
+        )
+    }
+
+    refresh = () {
+        refresh()
+    }
+
+    update = () {
+        return str(get_input())
+    }
+
+    close = () {
+        close()
+    }
+}

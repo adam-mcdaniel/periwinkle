@@ -1,0 +1,47 @@
+import "sdl2.pw"
+import "sprites.pw"
+import "player.pw"
+
+let screen = Screen().new("Hello Periwinkle!", 256, 256)
+
+
+let SIZE = 32
+
+
+let sprites = []
+
+let player = Player().new("blue.jpg", 1*SIZE, 1*SIZE, SIZE, SIZE)
+sprites += [player]
+
+
+for x in range(0, 8) {
+    sprites += [
+        Sprite().new("red.jpg", x*SIZE, 0*SIZE, SIZE, SIZE),
+        Sprite().new("red.jpg", x*SIZE, 7*SIZE, SIZE, SIZE)
+    ]
+}
+
+for y in range(1, 7) {
+    sprites += [
+        Sprite().new("red.jpg", 0*SIZE, y*SIZE, SIZE, SIZE),
+        Sprite().new("red.jpg", 7*SIZE, y*SIZE, SIZE, SIZE)
+    ]
+}
+
+
+let key = "."
+
+while true {
+    key = screen.update()
+    player.update(sprites, key)
+
+    screen.clear()
+    
+    for sp in sprites {
+        screen.blit(sp)
+    }
+
+    screen.refresh()
+}
+
+screen.close()

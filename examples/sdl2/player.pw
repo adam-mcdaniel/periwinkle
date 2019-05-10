@@ -1,0 +1,37 @@
+
+
+
+class Player : Sprite {
+    setup = () {
+        self.is_player = true
+        self.size = 32
+    }
+
+    update = (sprites, key) {
+        let old_x = self.x
+        let old_y = self.y
+
+        // Horizontal movement
+        if key == "a" {
+            self.move(0-self.size, 0)
+        }
+        if key == "d" {
+            self.move(self.size, 0)
+        }
+
+        // Vertical movement
+        if key == "w" {
+            self.move(0, 0-self.size)
+        }
+        if key == "s" {
+            self.move(0, self.size)
+        }
+
+
+        for sp in sprites {
+            if self.x == sp.x and self.y == sp.y and not sp.is_player {
+                self.goto(old_x, old_y)
+            }
+        }
+    }
+}

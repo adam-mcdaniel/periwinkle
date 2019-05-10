@@ -25,7 +25,8 @@ class Screen : CursesScreen {
 
     // Draws a sprite `sp` to the screen
     draw = (sp) {
-        self.write(sp.x, sp.y, sp)
+        // self.write(sp.x, sp.y, sp)
+        putln("drawing sp")
     }
 
     // Draw screen and update sprites
