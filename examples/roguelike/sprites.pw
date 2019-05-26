@@ -1,0 +1,43 @@
+
+class Point {
+    new = (x, y) {
+        self.x = x
+        self.y = y
+        return self
+    }
+
+    move = (x, y) {
+        self.x += x
+        self.y += y
+    }
+
+    goto = (x, y) {
+        self.x = x
+        self.y = y
+    }
+}
+
+
+class Sprite : Point {
+    // Put your setup stuff here when creating a sprite!
+    setup = () {}
+
+    new = (image, x, y, w, h) {
+        self.setup()
+        
+        self.w = w
+        self.h = h
+        
+        self.goto(x, y)
+        self.set_image(image)
+        return self
+    }
+
+    set_image = (image) {
+        self.image = image
+    }
+
+    get_image = () {
+        return self.image
+    }
+}

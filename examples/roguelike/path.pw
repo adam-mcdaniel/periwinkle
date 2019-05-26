@@ -1,0 +1,76 @@
+
+
+let PATH_SEED = 127.16701
+let RNG = Random().new(PATH_SEED)
+
+
+// Returns 1 or -1 randomly
+let rand_sign = () {
+    let sign = 0
+    let choose = RNG.next()
+    if choose > 0.5 {
+        sign = 1
+    }
+    if choose < 0.5 {
+        sign = 0-1
+    }
+    return sign
+}
+
+
+class Path {
+    new = (start_x, start_y) {
+        self.x = start_x
+        self.y = start_y
+
+        self.clear()
+        return self
+    }
+
+    clear = () { self.sprites = [] }
+    add = (sprite) { self.sprites += [sprite] }
+    road = (x, y) { self.add(Road().make(x, y)) }
+
+    rand_dir = () {
+        let dx = 0
+        let dy = 0
+
+        let choose = rand_sign()
+        if choose == 1 {
+            dx = rand_sign()
+        }
+        if choose == 0-1 {
+            dy = rand_sign()
+        }
+
+        return [dx, dy]
+    }
+
+    step = () {
+        let dx = 0
+        let dy = 0
+
+        let dir = self.rand_dir()
+        dx = dir[0]
+        dy = dir[1]
+
+        self.x += dx
+        self.y += dy
+        putln("x: ", self.x, " y: ", self.y)
+    }
+
+    generate = () {
+        self.clear()
+        self.road(self.x, self.y)
+        for n in range(0, 30) {
+            self.step()
+            self.road(self.x, self.y)
+        }
+
+        return self.sprites
+    }
+
+    end_pos = () {
+        return [self.x, self.y]
+    }
+}

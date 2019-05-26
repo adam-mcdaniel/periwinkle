@@ -1,0 +1,28 @@
+include "math.cpp"
+
+let round = round_fn&
+let to_float = to_float_fn&
+let to_int = to_int_fn&
+
+class Random {
+    new = (seed) {
+        self.seed = seed + 3.141592653589
+        self.last_value = seed
+        return self
+    }
+
+    next = () {
+        self.last_value *= self.seed
+        self.last_value %= 100.0
+        return self.last_value / 100.0
+    }
+
+    last = () {
+        return self.last_value / 100.0
+    }
+}
+
+
+// putln(
+//     "Rounded: ", to_float(5) + 0.5
+// )

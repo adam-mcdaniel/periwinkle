@@ -1,0 +1,264 @@
+import "const.pw"
+import "sdl2.pw"
+import "sprites.pw"
+import "road.pw"
+import "wall.pw"
+import "player.pw"
+import "math.pw"
+import "path.pw"
+
+
+// // let MAP_SIZE = 10
+// // let SIZE = 32
+// // let screen = Screen().new("Hello Periwinkle!", SIZE * MAP_SIZE, SIZE * MAP_SIZE)
+
+
+// // let sprites = []
+
+// // let player = Player().new("blue.jpg", 1*SIZE, 1*SIZE, SIZE, SIZE)
+// // sprites += [player]
+
+
+
+
+// // for x in range(0, MAP_SIZE) {
+// //     sprites += [
+// //         Sprite().new("red.jpg", x*SIZE, 0*SIZE, SIZE, SIZE),
+// //         Sprite().new("red.jpg", x*SIZE, (MAP_SIZE-1)*SIZE, SIZE, SIZE)
+// //     ]
+// // }
+
+// for y in range(1, MAP_SIZE-1) {
+//     sprites += [
+//         Sprite().new("red.jpg", 0*SIZE, y*SIZE, SIZE, SIZE),
+//         Sprite().new("red.jpg", (MAP_SIZE-1)*SIZE, y*SIZE, SIZE, SIZE)
+//     ]
+// }
+
+
+// // let key = "."
+// // let done = false
+// // while not done {
+// //     key = screen.update()
+// //     player.update(sprites, key)
+
+// //     screen.clear()
+    
+// //     for sp in sprites {
+// //         screen.blit(sp)
+// //     }
+
+// //     screen.refresh()
+
+
+// //     if key == "q" {
+// //         done = true
+// //     }
+// // }
+
+// // screen.close()
+
+
+// let MAP_SIZE = 10
+// let SIZE = 32
+// self.screen = Screen().new("Hello Periwinkle!", SIZE * MAP_SIZE, SIZE * MAP_SIZE)
+
+
+
+
+
+
+// let SEED = 2.718
+let SEED = 17.1371
+class World {
+    new = () {
+        self.rng = Random().new(SEED)
+        self.clear()
+        return self
+    }
+
+    clear = () { self.sprites = [] }
+    add = (sprite) { self.sprites += [sprite] }
+
+    rand_pos = () {
+        let x = to_int(round(to_float(MAP_SIZE) * self.rng.next()))
+        let y = to_int(round(to_float(MAP_SIZE) * self.rng.next()))
+        return [x, y]
+    }
+
+    // This creates a box at x, y with width w and height h
+    box = (x, y, w, h) {
+        // Iterate over x dimension
+        for i in range(0, w) {
+            self.add(Wall().make(x+i, y))
+            self.add(Wall().make(x+i, y+h-1))
+        }
+
+        // Iterate over y dimension
+        for i in range(1, h-1) {
+            self.add(Wall().make(x, y+i))
+            self.add(Wall().make(x+w-1, y+i))
+        }
+    }
+
+    room = (x, y, w, h) {
+        // Iterate over x dimension
+        for i in range(0, w) {
+            if i != (w / 2) {
+                self.add(Wall().make(x+i, y))
+                self.add(Wall().make(x+i, y+h-1))
+            }
+            
+            if i == (w / 2) {
+                self.add(Road().make(x+i, y))
+                self.add(Road().make(x+i, y+h-1))
+            }
+        }
+
+        // Iterate over y dimension
+        for i in range(1, h-1) {
+            if i != (h / 2) {
+                self.add(Wall().make(x, y+i))
+                self.add(Wall().make(x+w-1, y+i))
+            }
+            if i == (h / 2) {
+                self.add(Road().make(x, y+i))
+                self.add(Road().make(x+w-1, y+i))
+            }
+        }
+        
+        for i in range(1, w-1) {
+            for j in range(1, h-1) {
+                self.add(Road().make(x+i, y+j))
+            }
+        }
+    }
+
+    horizontal = (cons, x, y, n) {
+        for i in range(0, n) {
+            self.add(
+                cons().make(x+i, y)
+            )
+        }
+    }
+
+    vertical = (cons, x, y, n) {
+        for i in range(0, n) {
+            self.add(
+                cons().make(x, y+i)
+            )
+        }
+    }
+
+    horizontal_wall = (x, y, n) {
+        self.horizontal(Wall, x, y, n)
+    }
+
+    vertical_wall = (x, y, n) {
+        self.vertical(Wall, x, y, n)
+    }
+
+    horizontal_road = (x, y, n) {
+        self.horizontal(Road, x, y, n)
+    }
+
+    vertical_road = (x, y, n) {
+        self.vertical(Road, x, y, n)
+    }
+
+    // rand_wall = () {
+    //     let pos = self.rand_pos()
+    //     let x = pos[0]
+    //     let y = pos[1]
+
+    //     putln("x: ", x, " y: ", y)
+
+    //     self.add(
+    //         Wall().make(x, y)
+    //     )
+    // }
+    rand_wall = (max_len) {
+        let pos = self.rand_pos()
+        let x = pos[0] / to_int(MAP_SIZE / max_len)
+        let y = pos[1] / to_int(MAP_SIZE / max_len) 
+        let n = to_int(round(self.rng.next() * to_float(max_len)))
+
+        putln("x: ", x, " y: ", y, " n: ", n)
+        let d = self.rng.next()
+        putln("d: ", d)
+        if d > 0.5 {
+            self.vertical_wall(x, y, n)
+        }
+        if d < 0.5 {
+            self.horizontal_wall(x, y, n)
+        }
+
+        // self.add(
+        //     Wall().make(x, y)
+        // )
+    }
+
+
+    generate = () {
+        let SPACE = 6
+        self.horizontal_road(MAP_SIZE / 2-SPACE, MAP_SIZE / 2, SPACE*2)
+        self.vertical_road(MAP_SIZE / 2, MAP_SIZE / 2-SPACE, SPACE*2)
+
+        self.sprites += Path().new(MAP_SIZE / 2, MAP_SIZE / 2).generate()
+        self.sprites += Path().new(MAP_SIZE / 2-SPACE, MAP_SIZE / 2).generate()
+        self.sprites += Path().new(MAP_SIZE / 2+SPACE, MAP_SIZE / 2).generate()
+        self.sprites += Path().new(MAP_SIZE / 2, MAP_SIZE / 2-SPACE).generate()
+        self.sprites += Path().new(MAP_SIZE / 2, MAP_SIZE / 2+SPACE).generate()
+
+        let x = 0
+        let y = 0
+        let pos = [0, 0]
+
+        for _ in range(0, to_int(round(self.rng.next() * 5.0))) {
+            pos = self.rand_pos()
+            x = pos[0]
+            y = pos[1]
+
+            self.room(
+                MAP_SIZE / 4 + x / 2,
+                MAP_SIZE / 4 + y / 2,
+                5,
+                5
+            )
+        }
+        
+        return self.sprites
+    }
+}
+
+
+let screen = Screen().new("Roguelike", SIZE * MAP_SIZE, SIZE * MAP_SIZE)
+let world = World().new()
+let sprites = world.generate()
+
+
+let player = Player().make(MAP_SIZE / 2, MAP_SIZE / 2)
+sprites += [player]
+
+
+let key = "."
+let done = false
+while not done {
+    key = screen.update()
+    player.update(sprites, key)
+
+    screen.clear()
+    
+    for sp in sprites {
+        screen.blit(sp)
+    }
+
+    screen.refresh()
+
+
+    if key == "q" {
+        done = true
+    }
+}
+
+screen.close()

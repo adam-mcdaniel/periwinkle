@@ -1,0 +1,9 @@
+
+
+
+class Wall : Sprite {
+    make = (x, y) {
+        self.is_wall = true
+        return self.new("red.jpg", x*SIZE, y*SIZE, SIZE, SIZE)
+    }
+}

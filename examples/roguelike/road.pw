@@ -1,0 +1,11 @@
+
+
+
+class Road : Sprite {
+    make = (x, y) {
+        self.is_wall = false
+        self.is_road = true
+
+        return self.new("brown.jpg", x*SIZE, y*SIZE, SIZE, SIZE)
+    }
+}

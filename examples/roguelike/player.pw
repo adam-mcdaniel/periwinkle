@@ -1,0 +1,48 @@
+
+
+
+class Player : Sprite {
+    make = (x, y) {
+        self.is_wall = false
+        return self.new("blue.jpg", x*SIZE, y*SIZE, SIZE, SIZE)
+    }
+
+    update = (sprites, key) {
+        let old_x = self.x
+        let old_y = self.y
+
+        // Horizontal movement
+        if key == "a" {
+            self.move(0-SIZE, 0)
+        }
+        if key == "d" {
+            self.move(SIZE, 0)
+        }
+
+        // Vertical movement
+        if key == "w" {
+            self.move(0, 0-SIZE)
+        }
+        if key == "s" {
+            self.move(0, SIZE)
+        }
+
+
+        let touching_road = false
+        for sp in sprites {
+            if self.x == sp.x and self.y == sp.y {
+                if sp.is_wall {
+                    self.goto(old_x, old_y)
+                }
+
+                if sp.is_road {
+                    touching_road = true
+                }
+            }
+        }
+
+        if not touching_road {
+            self.goto(old_x, old_y)
+        }
+    }
+}
